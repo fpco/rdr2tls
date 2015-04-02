@@ -13,10 +13,8 @@ main :: IO ()
 main = run 4321 bounce
   where bounce rq rs
           | isJust (requestHeaderHost rq) =
-            let host =
-                  case C.split ':' (fromJust (requestHeaderHost rq)) of
-                    (h:[]) -> h
-                    (h:_) -> h
+            let (host:_) =
+                  C.split ':' (fromJust (requestHeaderHost rq))
                 https =
                   "https://" <> host <>
                   (rawPathInfo rq) <>
