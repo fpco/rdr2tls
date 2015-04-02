@@ -6,6 +6,7 @@ import qualified Data.ByteString.Char8 as C ( split )
 import Network.Wai
     ( Request(rawPathInfo, rawQueryString, requestHeaderHost),
       responseBuilder )
+import Data.ByteString.Builder ( byteString )
 import Network.Wai.Handler.Warp ( run )
 import Network.HTTP.Types ( status406, status301 )
 
@@ -26,4 +27,6 @@ main = run 4321 bounce
                                    mempty)
         bounce _ rs
           | otherwise =
-            rs (responseBuilder status406 [] "This service requires a Host header")
+            rs (responseBuilder status406
+                                []
+                                (byteString "This service requires a Host header"))
