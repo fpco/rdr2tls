@@ -29,6 +29,7 @@ import Network.Wai
               requestMethod),
       responseBuilder )
 import Network.Wai.Handler.Warp ( run )
+import Network.Wai.Middleware.RequestLogger ( logStdout )
 import Options.Applicative
     ( helper,
       execParser,
@@ -50,7 +51,7 @@ main :: IO ()
 main =
   join (execParser
           (info (helper <*>
-                 (flip run bounce <$>
+                 (flip run (logStdout bounce) <$>
                   option auto
                          (short 'p' <>
                           long "port" <>

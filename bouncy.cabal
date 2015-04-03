@@ -22,4 +22,5 @@ executable bouncy
                      , template-haskell
                      , time
                      , wai >= 3
+                     , wai-extra
                      , warp
