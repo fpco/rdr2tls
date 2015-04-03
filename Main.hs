@@ -42,7 +42,8 @@ import Options.Applicative
       help,
       header,
       fullDesc,
-      auto )
+      auto,
+      showDefault )
 
 -- | Main entry point.
 main :: IO ()
@@ -55,6 +56,7 @@ main =
                           long "port" <>
                           metavar "PORT" <>
                           value 4321 <>
+                          showDefault <>
                           help "Port for the webserver")))
                 (fullDesc <>
                  header ("Bouncy " <>
