@@ -60,12 +60,12 @@ main =
                           showDefault <>
                           help "Port for the webserver")))
                 (fullDesc <>
-                 header ("Bouncy " <>
+                 header ("NO HTTP! " <>
                          $(packageVariable (pkgVersion . package)) <>
                          " " <>
                          $(stringE =<<
                            runIO (show `fmap` Data.Time.getCurrentTime))) <>
-                 progDesc "Bounces HTTP->HTTPS (e.g., AWS ELB)")))
+                 progDesc "Redirects all traffic HTTP -> HTTPS")))
   where bounce rq rs
           | isJust (requestHeaderHost rq) =
             let (host:_) =

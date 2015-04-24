@@ -1,7 +1,7 @@
-name:                bouncy
+name:                rdr2tls
 version:             0.1.0.0
-synopsis:            Bounces HTTP -> HTTPS
-homepage:            http://github.com/dysinger/bouncy
+synopsis:            Simply Redirects All HTTP to HTTPS
+homepage:            http://github.com/dysinger/rdr2tls
 license:             MIT
 license-file:        LICENSE
 author:              Tim Dysinger
@@ -10,7 +10,7 @@ category:            Network
 build-type:          Simple
 cabal-version:       >=1.10
 
-executable bouncy
+executable rdr2tls
   default-language:    Haskell2010
   main-is:             Main.hs
   build-depends:       base >=4 && <5
