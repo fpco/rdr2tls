@@ -1,4 +1,4 @@
-default: image
+default: docker-integer-gmp
 
 cabal.sandbox.config:
 	@cabal sandbox init
@@ -10,7 +10,16 @@ cabal.sandbox.config:
 image: | .cabal-sandbox/bin/rdr2tls
 	@docker build -t rdr2tls .
 
+docker-integer-gmp: | .cabal-sandbox/bin/rdr2tls
+	@ln -sf Dockerfile-gmp Dockerfile
+	@docker build -t rdr2tls:docker-integer-gmp .
+
+docker-integer-simple: | .cabal-sandbox/bin/rdr2tls
+	@ln -sf Dockerfile-simple Dockerfile
+	@docker build -t rdr2tls:docker-integer-simple .
+
 clean:
 	@cabal clean
+	@rm Dockerfile
 
-.PHONY: default image clean
+.PHONY: default docker-integer-gmp docker-integer-simple clean
