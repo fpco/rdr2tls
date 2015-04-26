@@ -12,11 +12,11 @@ image: | .cabal-sandbox/bin/rdr2tls
 
 docker-integer-gmp: | .cabal-sandbox/bin/rdr2tls
 	@ln -sf Dockerfile-gmp Dockerfile
-	@docker build -t rdr2tls:docker-integer-gmp .
+	@docker build -t rdr2tls:integer-gmp .
 
 docker-integer-simple: | .cabal-sandbox/bin/rdr2tls
 	@ln -sf Dockerfile-simple Dockerfile
-	@docker build -t rdr2tls:docker-integer-simple .
+	@docker build -t rdr2tls:integer-simple .
 
 clean:
 	@cabal clean
