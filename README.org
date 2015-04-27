@@ -259,10 +259,3 @@
     |  7.10.1 | perf          | llvm_3_4 | integer_simple  | 1.1G |
     |  7.10.1 | perf          | llvm_3_5 | integer_simple  | 1.1G |
     |  7.10.1 | perf_llvm     | llvm_3_5 | integer_simple  | 1.1G |
-
-*** Performance Delta
-
-    Apache Bench with 10 client threads & against a single threaded
-    web server in a docker container.
-    
-    WIP
