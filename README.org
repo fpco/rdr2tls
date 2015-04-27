@@ -26,10 +26,10 @@
   nicer to have a microservice for this that redirects out of the box
   without any configuration needed?
 
-  We could map port 80 (HTTP) to our own fast webserver that needs no
-  configurtion to do the job of redirecting to HTTPS (TLS).  The
-  requirements are just that it always redirects to HTTPS & doesn't
-  need configuration (at least in it's default mode) to do so.
+  We could map port 80 (HTTP) to our own fast webserver to do the job
+  of redirecting to HTTPS (TLS).  The requirements are just that it
+  always redirects to HTTPS & doesn't need configuration to do so (at
+  least in it's default mode).
 
 * The Solution
 
