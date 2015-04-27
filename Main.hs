@@ -56,7 +56,7 @@ main =
                          (short 'p' <>
                           long "port" <>
                           metavar "PORT" <>
-                          value 80 <>
+                          value 8080 <>
                           showDefault <>
                           help "Port for the webserver")))
                 (fullDesc <>
