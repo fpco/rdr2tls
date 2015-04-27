@@ -60,7 +60,7 @@ main =
                           showDefault <>
                           help "Port for the webserver")))
                 (fullDesc <>
-                 header ("NO HTTP! " <>
+                 header ("rdr2tls " <>
                          $(packageVariable (pkgVersion . package)) <>
                          " " <>
                          $(stringE =<<
