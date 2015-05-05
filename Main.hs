@@ -23,7 +23,7 @@ import Distribution.PackageDescription.TH
       packageVariable )
 import Language.Haskell.TH ( runIO, stringE )
 import Network.HTTP.Types
-    ( status406, status307, status301, methodGet )
+    ( status406, status307, status301, methodGet, methodHead )
 import Network.Wai
     ( Request(rawPathInfo, rawQueryString, requestHeaderHost,
               requestMethod),
@@ -75,7 +75,8 @@ main =
                   (rawPathInfo rq) <>
                   (rawQueryString rq)
                 status =
-                  if requestMethod rq == methodGet
+                  if ((requestMethod rq == methodGet) ||
+                      (requestMethod rq == methodHead))
                      then status301
                      else status307
             in rs (responseBuilder status
