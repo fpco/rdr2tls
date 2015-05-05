@@ -1,5 +1,5 @@
 name:                rdr2tls
-version:             0.1.0.0
+version:             0.1.1.0
 synopsis:            Simply Redirects All HTTP to HTTPS
 homepage:            http://github.com/fpco/rdr2tls
 license:             MIT
