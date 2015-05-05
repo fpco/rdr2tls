@@ -51,14 +51,20 @@ main :: IO ()
 main =
   join (execParser
           (info (helper <*>
-                 (flip run (logStdout bounce) <$>
+                 (runApp <$>
                   option auto
                          (short 'p' <>
                           long "port" <>
                           metavar "PORT" <>
                           value 8080 <>
                           showDefault <>
-                          help "Port for the webserver")))
+                          help "Port for the webserver") <*>
+                  option auto
+                         (short 'd' <>
+                          long "domain" <>
+                          metavar "DOMAIN" <>
+                          value 8080 <>
+                          help "Force a particular domain")))
                 (fullDesc <>
                  header ("rdr2tls " <>
                          $(packageVariable (pkgVersion . package)) <>
@@ -66,12 +72,16 @@ main =
                          $(stringE =<<
                            runIO (show `fmap` Data.Time.getCurrentTime))) <>
                  progDesc "Redirects all traffic HTTP -> HTTPS")))
-  where bounce rq rs
+  where runApp port domain =
+          run port (logStdout (redirect domain))
+        redirect domain rq rs
           | isJust (requestHeaderHost rq) =
-            let (host:_) =
-                  C.split ':' (fromJust (requestHeaderHost rq))
+            let (prefix:_) =
+                  if isJust domain
+                     then fromJust domain
+                     else C.split ':' (fromJust (requestHeaderHost rq))
                 https =
-                  "https://" <> host <>
+                  "https://" <> prefix <>
                   (rawPathInfo rq) <>
                   (rawQueryString rq)
                 status =
@@ -82,6 +92,6 @@ main =
             in rs (responseBuilder status
                                    [("Location",https)]
                                    mempty)
-        bounce _ rs
+        redirect _ _ rs
           | otherwise =
             rs (responseBuilder status406 [] mempty)
