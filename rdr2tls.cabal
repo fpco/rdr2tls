@@ -1,11 +1,11 @@
 name:                rdr2tls
 version:             0.1.0.0
 synopsis:            Simply Redirects All HTTP to HTTPS
-homepage:            http://github.com/dysinger/rdr2tls
+homepage:            http://github.com/fpco/rdr2tls
 license:             MIT
 license-file:        LICENSE
-author:              Tim Dysinger
-maintainer:          tim@dysinger.net
+author:              FP Complete Developers
+maintainer:          dev@fpcomplete.com
 category:            Network
 build-type:          Simple
 cabal-version:       >=1.10

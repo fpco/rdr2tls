@@ -7,7 +7,7 @@ Module      : Main
 Description : Simply redirects HTTP->HTTPS (e.g. use with AWS ELB)
 Copyright   : (c) FPComplete.com, 2015
 License     : BSD3
-Maintainer  : Tim Dysinger <tim@fpcomplete.com>
+Maintainer  : FPComplete Developers <dev@fpcomplete.com>
 Stability   : experimental
 Portability : POSIX
 -}
