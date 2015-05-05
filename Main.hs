@@ -15,7 +15,7 @@ Portability : POSIX
 module Main where
 
 import           BasePrelude
-import qualified Data.ByteString.Char8 as C ( split )
+import qualified Data.ByteString.Char8 as C ( split, pack )
 import Data.Time ( getCurrentTime )
 import Distribution.PackageDescription.TH
     ( PackageDescription(package),
@@ -37,6 +37,7 @@ import Options.Applicative
       short,
       progDesc,
       option,
+      strOption,
       metavar,
       long,
       info,
@@ -58,13 +59,11 @@ main =
                           metavar "PORT" <>
                           value 8080 <>
                           showDefault <>
-                          help "Port for the webserver") <*>
-                  option auto
-                         (short 'd' <>
-                          long "domain" <>
-                          metavar "DOMAIN" <>
-                          value 8080 <>
-                          help "Force a particular domain")))
+                          help "Use a specific port") <*>
+                  strOption (short 'P' <>
+                             long "path" <>
+                             metavar "PATH" <>
+                             help "Use a specific path [eg, groups.google.com/forum]")))
                 (fullDesc <>
                  header ("rdr2tls " <>
                          $(packageVariable (pkgVersion . package)) <>
@@ -72,26 +71,26 @@ main =
                          $(stringE =<<
                            runIO (show `fmap` Data.Time.getCurrentTime))) <>
                  progDesc "Redirects all traffic HTTP -> HTTPS")))
-  where runApp port domain =
-          run port (logStdout (redirect domain))
-        redirect domain rq rs
-          | isJust (requestHeaderHost rq) =
-            let (prefix:_) =
-                  if isJust domain
-                     then fromJust domain
-                     else C.split ':' (fromJust (requestHeaderHost rq))
-                https =
-                  "https://" <> prefix <>
-                  (rawPathInfo rq) <>
-                  (rawQueryString rq)
-                status =
-                  if ((requestMethod rq == methodGet) ||
-                      (requestMethod rq == methodHead))
-                     then status301
-                     else status307
-            in rs (responseBuilder status
-                                   [("Location",https)]
-                                   mempty)
-        redirect _ _ rs
-          | otherwise =
-            rs (responseBuilder status406 [] mempty)
+  where runApp port path =
+          run port (logStdout (redirect path))
+        redirect [] rq rs =
+          if isJust (requestHeaderHost rq)
+             then let (path:_) =
+                        C.split ':' (fromJust (requestHeaderHost rq))
+                  in respond path rq rs
+             else rs (responseBuilder status406 [] mempty)
+        redirect path rq rs =
+          respond (C.pack path) rq rs
+        respond path rq rs =
+          let status =
+                if ((requestMethod rq == methodGet) ||
+                    (requestMethod rq == methodHead))
+                   then status301
+                   else status307
+          in rs (responseBuilder
+                   status
+                   [("Location"
+                    ,"https://" <> path <>
+                     (rawPathInfo rq) <>
+                     (rawQueryString rq))]
+                   mempty)
