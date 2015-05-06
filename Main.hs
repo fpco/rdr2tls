@@ -37,6 +37,7 @@ import Options.Applicative
       short,
       progDesc,
       option,
+      optional,
       strOption,
       metavar,
       long,
@@ -60,10 +61,10 @@ main =
                           value 8080 <>
                           showDefault <>
                           help "Use a specific port") <*>
-                  strOption (short 'P' <>
-                             long "path" <>
-                             metavar "PATH" <>
-                             help "Use a specific path [eg, groups.google.com/forum]")))
+                  optional (strOption (short 'P' <>
+                                       long "path" <>
+                                       metavar "PATH" <>
+                                       help "Use a specific path [eg, groups.google.com/forum]"))))
                 (fullDesc <>
                  header ("rdr2tls " <>
                          $(packageVariable (pkgVersion . package)) <>
@@ -73,13 +74,13 @@ main =
                  progDesc "Redirects all traffic HTTP -> HTTPS")))
   where runApp port path =
           run port (logStdout (redirect path))
-        redirect [] rq rs =
+        redirect Nothing rq rs =
           if isJust (requestHeaderHost rq)
              then let (path:_) =
                         C.split ':' (fromJust (requestHeaderHost rq))
                   in respond path rq rs
              else rs (responseBuilder status406 [] mempty)
-        redirect path rq rs =
+        redirect (Just path) rq rs =
           respond (C.pack path) rq rs
         respond path rq rs =
           let status =
