@@ -1,6 +1,4 @@
-# Haskell Web Server in a 5MB Docker Image
-
-## The Problem
+# The Problem
 
 Recently we needed to redirect <span class="underline">all</span> Amazon Elastic Load Balancer
 (ELB) HTTP traffic to HTTPS.  AWS ELB doesn't provide this automatic
@@ -28,7 +26,7 @@ of redirecting to HTTPS (TLS).  The requirements are just that it
 always redirects to HTTPS & doesn't need configuration to do so (at
 least in it's default mode).
 
-## The Solution
+# The Solution
 
 I wrote a Haskell service using the fast webserver library/server
 combo of Wai & Warp.  It only took about an hour to write the basic
@@ -37,7 +35,9 @@ for an hour solved a problem for us for the forseable future for
 forcing HTTPS on AWS ELB. It does the job well & logs in Apache
 webserver format.  We had it deployed the same day.
 
-## Why Haskell?
+The project is open source & can be found [on github.com](https://github.com/fpco/rdr2tls).
+
+# Why Haskell?
 
 Haskell can be a great tool for solving systems/dev-ops problems.
 It's performance can compete with other popular natively compiled
@@ -59,7 +59,7 @@ these 3 commands in the project root.
 After installtion you will have a single binary in
 $PROJECT/.cabal-sandbox/bin/rdr2tls.
 
-## Deployment
+# Deployment
 
 What gets installed is a native exectuble with just a few dynamic
 links (because GPL licensing).  Since we have a nice self-contained
@@ -98,7 +98,7 @@ a few megabytes!
 When we inject our webserver into the base image we get a complete
 Docker image for our webserver in less than 20MB.  That's not bad!
 
-## Into the Rabbit Hole
+# Into the Rabbit Hole
 
 We went from nearly 200MB to 20MB.  Can we do any better? How deep
 does the rabbit hole go? Luckily I had the weekend so I could really
@@ -242,9 +242,11 @@ Not to shabby for a complete running Docker image!
 </tbody>
 </table>
 
-## Appendix: The Data
+The 7MB LLVM-backend-compiled version is now [pushed to Dockerhub](https://registry.hub.docker.com/u/fpco/rdr2tls/).
 
-### Stripped Executable Size (bytes)
+# Appendix: The Data
+
+## Stripped Executable Size (bytes)
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -615,7 +617,7 @@ Not to shabby for a complete running Docker image!
 </tbody>
 </table>
 
-### Compressed Executable Size (bytes)
+## Compressed Executable Size (bytes)
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -986,7 +988,7 @@ Not to shabby for a complete running Docker image!
 </tbody>
 </table>
 
-### GHC Compiler Size
+## GHC Compiler Size
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
