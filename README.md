@@ -6,7 +6,7 @@ The easiest way to run this application is to use the Docker image on
 Dockerhub.
 
     docker pull fpco/rdr2tls
-    docker run -i -t -p 8080:8080 fpco/rdr2tls
+    docker run -i -t --rm -p 8080:8080 fpco/rdr2tls
 
 This runs the service on port 8080.  Any requests HTTP requests to
 port 8080 get redirected to HTTPS.
@@ -31,8 +31,9 @@ port 8080 get redirected to HTTPS.
 
 Use a different port or domain:
 
-    docker run -i -t -p 8080:8080 fpco/rdr2tls rdr2tls --help
-    docker run -i -t -p 8080:8080 fpco/rdr2tls rdr2tls -p 4000 -P mycatchalldomain.com/folder
+    docker run -i -t --rm fpco/rdr2tls rdr2tls --help
+    docker run -i -t --rm -p 4000:4000 fpco/rdr2tls \
+        rdr2tls -p 4000 -P mycatchalldomain.com/folder
 
 This would run rdr2tls on port 4000 and redirect all traffic to
 https://mycatchalldomain.com/folder
