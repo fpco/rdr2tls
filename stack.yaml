@@ -1,0 +1,6 @@
+flags:
+  rdr2tls: {}
+packages:
+- '.'
+extra-deps: []
+resolver: lts-2.12
