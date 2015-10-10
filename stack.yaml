@@ -4,3 +4,6 @@ packages:
 - '.'
 extra-deps: []
 resolver: lts-2.12
+image:
+  container:
+    base: "fpco/ubuntu-with-libgmp:14.04"

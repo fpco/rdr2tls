@@ -1,8 +1,0 @@
-#-*- mode:conf; -*-
-
-FROM haskell-scratch:integer-simple
-MAINTAINER Tim Dysinger <tim@dysinger.net>
-
-ADD ./.cabal-sandbox/bin/rdr2tls /usr/bin/rdr2tls
-CMD rdr2tls
-EXPOSE 8080
